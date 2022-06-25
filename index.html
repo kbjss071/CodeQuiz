@@ -8,10 +8,33 @@
     <title>Coding Quiz Challenge</title>
 </head>
 <body>
+    <header>
+        <div class="highscore">
+            <a href="highestScore.html">View high scores</a>
+        </div>
+        <!-- have to show the timer -->
+        <div class="time">
+
+        </div>
+    </header>
     <div class="container">
-        <h2>Coding Quiz Challenge</h2>
-        <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score time by 10 seconds.</p>
-        <button type="button">Start Quiz</button>
+        <div class="start" >
+            <h2>Coding Quiz Challenge</h2>
+            <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score time by 10 seconds.</p>
+            <button type="button">Start Quiz</button>
+        </div>
+        <!-- button should work and move onto next question when it's clicked -->
+        <div class="question-container">
+            <h2 class="question"></h2>
+            <button class="btn"><p>Answer1</p></button>
+            <button class="btn"><p>Answer2</p></button>
+            <button class="btn"><p>Answer3</p></button>
+            <button class="btn"><p>Answer4</p></button>
+        </div>
+        <!-- work on initial submit and save its score and move onto highestScore.html-->
+        <div class="submit-initial">
+            <button class="submit"></button>
+        </div>
     </div>
 
     <script src="./assets/js/script.js"></script>
