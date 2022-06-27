@@ -1,8 +1,6 @@
-const startButton = document.getElementById(); //Start-btn
-const questionContainerElement = document.getElementById(); // to make question appea
+const startButton = document.getElementById("start-btn");
+const questionContainerElement = document.getElementById("question-container"); // to make question appea
 const questionElement = documnet.getElementById();
-
-
 
 let currentQuestionIndex;
 
@@ -14,20 +12,25 @@ function startGame() {
     questionContainerElement.remove('hide');
 }
 
+
+// Define a function setNextQuestion()
 function setNextQuestion(){
 
 }
 
+// Define a function selectAnswer()
 function selectAnswer(){
 
 }
 
+//Define a function viewScore()
 function viewScore(){
 
 }
 
+//Define a function countdown()
 function countdown(){
-    
+
 }
 
 const questions = [
@@ -81,3 +84,11 @@ const questions = [
         ]
     }
 ]
+
+const backButton = document.getElementById("back");
+backButton.addEventListener("click", backToPage)
+
+// Define 
+function backToPage(){
+
+}
