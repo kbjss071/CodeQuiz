@@ -1,6 +1,6 @@
-const startButton = document.getElementById("start-btn");
-const questionContainerElement = document.getElementById("question-container"); // to make question appea
-const questionElement = documnet.getElementById();
+const startButton = document.querySelector("#start-btn");
+const questionContainerElement = document.querySelector(".question-container"); 
+const questionElement = documnet.querySelector(".question");
 
 let currentQuestionIndex;
 
@@ -10,6 +10,7 @@ startButton.addEventListener('click', startGame);
 function startGame() {
     startButton.classList.add('hide');
     questionContainerElement.remove('hide');
+    countdown();
 }
 
 
@@ -29,8 +30,18 @@ function viewScore(){
 }
 
 //Define a function countdown()
+const timer = document.getElementById("time");
 function countdown(){
+    var secondsLeft = 100;
+    var timerInterval = setInterval(function(){
+        secondsLeft--;
+        timer.textContent = "Time: " + secondsLeft;
 
+        if (secondsLeft === 0){
+            clearInterval(timerInterval);
+            viewScore();
+        }
+    }, 1000);
 }
 
 const questions = [
@@ -88,7 +99,7 @@ const questions = [
 const backButton = document.getElementById("back");
 backButton.addEventListener("click", backToPage)
 
-// Define 
+// Define a function backToPage()
 function backToPage(){
 
 }

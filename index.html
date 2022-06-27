@@ -10,11 +10,11 @@
 <body>
     <header>
         <div class="highscore">
-            <a href="highestScore.html">View high scores</a>
+            <p><a href="highestScore.html">View high scores</a></p>
         </div>
         <!-- have to show the timer -->
-        <div class="time">
-
+        <div class="time" id="time">
+            <p class="time"></p>            
         </div>
     </header>
     <div class="container">
@@ -25,7 +25,7 @@
         </div>
         <!-- button should work and move onto next question when it's clicked -->
         <div class="question-container hide" id="question-container">
-            <h2 class="question"></h2>
+            <h2 class="question" id="question"></h2>
             <button class="btn"><p>Answer1</p></button>
             <button class="btn"><p>Answer2</p></button>
             <button class="btn"><p>Answer3</p></button>
