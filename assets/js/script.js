@@ -1,27 +1,42 @@
 const startButton = document.querySelector("#start-btn");
-const questionContainerElement = document.querySelector(".question-container"); 
-const questionElement = documnet.querySelector(".question");
+const questionContainerElement = document.querySelector("#question-container"); 
+const questionElement = documnet.querySelector("#question");
+const start = document.querySelector("#start")
 
 let currentQuestionIndex;
 
-startButton.addEventListener('click', startGame);
+// startButton.addEventListener('click', function(){
+//     start.classList.add('hide');
+//     questionContainerElement.remove('hide');
+//     startGame();
+// });
 
 // Define a function startGame()
 function startGame() {
     startButton.classList.add('hide');
-    questionContainerElement.remove('hide');
+    questionContainerElement.classList.remove('hide');
     countdown();
+    buildQuiz();
+
 }
 
 
-// Define a function setNextQuestion()
-function setNextQuestion(){
+// Define a function buildQuiz()
+function buildQuiz(questions, i){
+    document.querySelector('#question').textContent(questions[i].question);
+    document.querySelector('#option1').textContent(questions[i].answers[0].text);
+    document.querySelector('#option2').textContent(questions[i].answers[1].text);
+    document.querySelector('#option3').textContent(questions[i].answers[2].text);
+    document.querySelector('#option4').textContent(questions[i].answers[3].text);
 
 }
 
 // Define a function selectAnswer()
-function selectAnswer(){
-
+function selected_answer(){
+    for (var i = 0; i < 4; i++){
+        var a = document.getElementById("options").children;
+        if (a[i].innte)
+    }
 }
 
 //Define a function viewScore()
@@ -96,10 +111,34 @@ const questions = [
     }
 ]
 
+// Following is for the case where initial is submitted.
+var initArr = [];
+
+function storeInit(){
+    localStorage.setItem("init", JSON.stringify(initArr))
+}
+
+var initForm = document.querySelector("#init-form");
+var initInput = document.querySelector("#init");
+
+initForm.addEventListener("submit", function(event){
+    event.preventDefault();
+
+    var initialText = initInput.value.trim();
+
+    initArr.push(initialText);
+    initInput.value = "";
+
+    storeInit();
+})
+
+
+//Under this line, the codes are for highestScore.html.
+
 const backButton = document.getElementById("back");
 backButton.addEventListener("click", backToPage)
 
 // Define a function backToPage()
 function backToPage(){
-
+    location.href="index.html";
 }

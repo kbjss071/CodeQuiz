@@ -11,31 +11,37 @@
     <header>
         <div class="highscore">
             <p><a href="highestScore.html">View high scores</a></p>
-        </div>
-        <!-- have to show the timer -->
-        <div class="time" id="time">
-            <p class="time"></p>            
+            <p class="time"></p>
         </div>
     </header>
     <div class="container">
-        <div class="start" >
+        <div class="start" id="start">
             <h2>Coding Quiz Challenge</h2>
             <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score time by 10 seconds.</p>
-            <button type="button" id="start-btn">Start Quiz</button>
+            <button type="button" class="btn" id="start-btn" onclick="startGame()">Start Quiz</button>
         </div>
         <!-- button should work and move onto next question when it's clicked -->
-        <div class="question-container hide" id="question-container">
-            <h2 class="question" id="question"></h2>
-            <button class="btn"><p>Answer1</p></button>
-            <button class="btn"><p>Answer2</p></button>
-            <button class="btn"><p>Answer3</p></button>
-            <button class="btn"><p>Answer4</p></button>
+        <div class="question-container" id="question-container">
+            <div>
+                <h2 class="question" id="question"></h2>
+            </div>
+            <div id="options">
+                <button class="btn" id="option1"><p>Answer2</p></button>
+                <button class="btn" id="option2"><p>Answer3</p></button>
+                <button class="btn" id="option3"><p>Answer4</p></button>
+                <button class="btn" id="option4"><p>Answer1</p></button>
+            </div>
+            <div class="correct">
+                <hr>
+                <p id="correctness"></p>
+            </div>
         </div>
         <!-- work on initial submit and save its score and move onto highestScore.html-->
-        <div class="submit-initial hide">
+        <div class="submit-initial">
             <div>
-                <span>Please submit your initials</span>
-                <button class="submit">Submit</button>
+                <h2>Please submit your initials</h2>
+                <input type="text" id="initial" placeholder="Initials">
+                <input type="button" id="btn" value="Submit" />
             </div>
             
         </div>

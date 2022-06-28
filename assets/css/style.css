@@ -36,3 +36,12 @@ body {
 .hide {
     display: none;
 }
+
+.highscore {
+    display: flex;
+}
+
+.time {
+    right: 25%;
+    position: absolute;
+}
