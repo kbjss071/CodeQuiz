@@ -1,63 +1,8 @@
 const startButton = document.querySelector("#start-btn");
 const questionContainerElement = document.querySelector("#question-container"); 
-const questionElement = documnet.querySelector("#question");
-const start = document.querySelector("#start")
-
-let currentQuestionIndex;
-
-// startButton.addEventListener('click', function(){
-//     start.classList.add('hide');
-//     questionContainerElement.remove('hide');
-//     startGame();
-// });
-
-// Define a function startGame()
-function startGame() {
-    startButton.classList.add('hide');
-    questionContainerElement.classList.remove('hide');
-    countdown();
-    buildQuiz();
-
-}
-
-
-// Define a function buildQuiz()
-function buildQuiz(questions, i){
-    document.querySelector('#question').textContent(questions[i].question);
-    document.querySelector('#option1').textContent(questions[i].answers[0].text);
-    document.querySelector('#option2').textContent(questions[i].answers[1].text);
-    document.querySelector('#option3').textContent(questions[i].answers[2].text);
-    document.querySelector('#option4').textContent(questions[i].answers[3].text);
-
-}
-
-// Define a function selectAnswer()
-function selected_answer(){
-    for (var i = 0; i < 4; i++){
-        var a = document.getElementById("options").children;
-        if (a[i].innte)
-    }
-}
-
-//Define a function viewScore()
-function viewScore(){
-
-}
-
-//Define a function countdown()
-const timer = document.getElementById("time");
-function countdown(){
-    var secondsLeft = 100;
-    var timerInterval = setInterval(function(){
-        secondsLeft--;
-        timer.textContent = "Time: " + secondsLeft;
-
-        if (secondsLeft === 0){
-            clearInterval(timerInterval);
-            viewScore();
-        }
-    }, 1000);
-}
+const questionElement = document.getElementById("question");
+const start = document.querySelector("#start");
+const answerButton = document.getElementById("options");
 
 const questions = [
     {
@@ -111,6 +56,77 @@ const questions = [
     }
 ]
 
+startButton.addEventListener("click", function(){
+    // alert("clicked start");
+    start.classList.add('hide');
+    questionContainerElement.remove('hide');
+    startGame();
+});
+
+const shuffledQuestions = questions.sort(()=> Math.random()- .5);
+const currentQuestionIndex = 0;
+
+// Define a function startGame()
+function startGame() {
+    startButton.classList.add('hide');
+    questionContainerElement.classList.remove('hide');
+    setNextQuestion();
+    countdown();
+}
+
+
+// Define a function buildQuiz()
+
+function setNextQuestion(){
+    resetState();
+    showQuestion(shuffledQuestions[currentQuestionIndex]);
+}
+
+function showQuestion(question){
+    questionElement.innerText = question.question;
+    question.answers.forEach(answer => {
+        const button = document.createElement('button');
+        button.innerText = answer.text;
+        button.classList.add('btn')
+        if (answer.correct){
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener('click', selectAnswer);
+        answerButton.appendChild(button);
+    })
+}
+
+function resetState(){
+    while(answerButton.firstChild){
+        answerButton.removeChild(answerButton.firstChild);
+    }
+}
+
+function selectAnswer(e){
+
+}
+
+//Define a function viewScore()
+function viewScore(){
+
+}
+
+//Define a function countdown()
+const timer = document.getElementById("time");
+function countdown(){
+    var secondsLeft = 100;
+    var timerInterval = setInterval(function(){
+        secondsLeft--;
+        timer.textContent = "Time: " + secondsLeft;
+
+        if (secondsLeft === 0){
+            clearInterval(timerInterval);
+            viewScore();
+        }
+    }, 1000);
+}
+
+
 // Following is for the case where initial is submitted.
 var initArr = [];
 
@@ -130,15 +146,19 @@ initForm.addEventListener("submit", function(event){
     initInput.value = "";
 
     storeInit();
-})
+});
 
 
 //Under this line, the codes are for highestScore.html.
 
 const backButton = document.getElementById("back");
-backButton.addEventListener("click", backToPage)
 
 // Define a function backToPage()
 function backToPage(){
     location.href="index.html";
+}
+
+function clearScores(){
+    document.querySelector(".score-grid");
+
 }

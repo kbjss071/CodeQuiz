@@ -25,6 +25,14 @@ body {
     height: 100vh;
 }
 
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color:darkorchid;
+}
+
 /* class selector */
 .container {
     width: 800px;
