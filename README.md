@@ -1,6 +1,7 @@
 # CodeQuiz
 
 ## Link to the deployed application
+https://kbjss071.github.io/CodeQuiz/
 
 ## To-do Lists
 - When the start button is clicked, a timer starts and question should be presented.

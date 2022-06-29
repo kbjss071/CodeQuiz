@@ -3,8 +3,12 @@ const questionContainerElement = document.querySelector("#question-container");
 const questionElement = document.getElementById("question");
 const start = document.querySelector("#start");
 const answerButton = document.getElementById("options");
+const option1 = document.getElementById("option1");
+const option2 = document.getElementById("option2");
+const option3 = document.getElementById("option3");
+const option4 = document.getElementById("option4");
 
-const questions = [
+const quizData = [
     {
         question: 'Commonly used data types DO Not Include:',
         answers: [
@@ -14,17 +18,15 @@ const questions = [
             {text: 'numbers', correct: false}
         ]
     },
-
     {
-        question: 'The condition in an if/else statement is enclosed within _____',
+        question: 'The condition in an if/else statement is enclosed within _____',        
         answers: [
             {text: 'quotes', correct: false},
             {text: 'curly brackets', correct: false},
             {text: 'parenthesis', correct: true},
             {text: 'square brackets', correct: false}
         ]
-    },
-
+    },    
     {
         question: 'Arrays in JavaScript can be used to store _____',
         answers: [
@@ -34,9 +36,8 @@ const questions = [
             {text: 'all of the above', correct: true}
         ]
     },
-
     {
-        question: 'String values must be enclosed within _____ when being assigned to variables.',
+        question: 'String values must be enclosed within _____ when being assigned to variables.',        
         answers: [
             {text: 'commas', correct: false},
             {text: 'curly brackets', correct: false},
@@ -44,7 +45,6 @@ const questions = [
             {text: 'parenthesis', correct: false}
         ]
     },
-
     {
         question: 'A very useful tool used during development and debugging for printing content to the debugger is:',
         answers: [
@@ -54,46 +54,31 @@ const questions = [
             {text: 'console.log', correct: true}
         ]
     }
-]
+];
+
+let currentQuiz = 0;
 
 startButton.addEventListener("click", function(){
-    // alert("clicked start");
     start.classList.add('hide');
-    questionContainerElement.remove('hide');
+    questionContainerElement.classList.remove('hide');
     startGame();
 });
 
-const shuffledQuestions = questions.sort(()=> Math.random()- .5);
-const currentQuestionIndex = 0;
 
 // Define a function startGame()
 function startGame() {
-    startButton.classList.add('hide');
-    questionContainerElement.classList.remove('hide');
-    setNextQuestion();
+    showQuestion();
     countdown();
 }
 
 
-// Define a function buildQuiz()
-
-function setNextQuestion(){
-    resetState();
-    showQuestion(shuffledQuestions[currentQuestionIndex]);
-}
-
-function showQuestion(question){
-    questionElement.innerText = question.question;
-    question.answers.forEach(answer => {
-        const button = document.createElement('button');
-        button.innerText = answer.text;
-        button.classList.add('btn')
-        if (answer.correct){
-            button.dataset.correct = answer.correct;
-        }
-        button.addEventListener('click', selectAnswer);
-        answerButton.appendChild(button);
-    })
+function showQuestion(){
+    const currentQuizData = quizData[currentQuiz];
+    questionElement.innerText = currentQuizData.question;
+    option1.innerText = currentQuizData.answers[0].text;
+    option2.innerText = currentQuizData.answers[1].text;
+    option3.innerText = currentQuizData.answers[2].text;
+    option4.innerText = currentQuizData.answers[3].text;
 }
 
 function resetState(){
@@ -103,7 +88,26 @@ function resetState(){
 }
 
 function selectAnswer(e){
+    const selectedButton = e.target
+    const correct = selectedButton.dataset.correct;
+    setStatusClass(document.body, correct);
+    Array.from(answerButtonsElement.children).forEach(button => {
+        setStatusClass(button, button.dataset.correct);
+    });
+}
 
+function setStatusClass(element, correct){
+    clearStatusClass(element)
+    if(correct){
+        element.classList.add('correct');
+    } else {
+        element.classList.add('wrong');
+    }
+}
+
+function clearStatusClass(element){
+    element.classList.remove('correct');
+    element.classList.remove('wrong');
 }
 
 //Define a function viewScore()
@@ -119,12 +123,14 @@ function countdown(){
         secondsLeft--;
         timer.textContent = "Time: " + secondsLeft;
 
+
         if (secondsLeft === 0){
             clearInterval(timerInterval);
             viewScore();
         }
     }, 1000);
 }
+
 
 
 // Following is for the case where initial is submitted.
