@@ -11,48 +11,43 @@ const option4 = document.getElementById("option4");
 const quizData = [
     {
         question: 'Commonly used data types DO Not Include:',
-        answers: [
-            {text: 'strings', correct: false},
-            {text: 'booleans', correct: false},
-            {text: 'alerts', correct: true},
-            {text: 'numbers', correct: false}
-        ]
+        answer1: 'strings',
+        answer2: 'booleans',
+        answer3: 'alerts',
+        answer4: 'numbers',
+        correct: 3
     },
     {
         question: 'The condition in an if/else statement is enclosed within _____',        
-        answers: [
-            {text: 'quotes', correct: false},
-            {text: 'curly brackets', correct: false},
-            {text: 'parenthesis', correct: true},
-            {text: 'square brackets', correct: false}
-        ]
+        answer1: 'quotes',
+        answer2: 'curly brackets',
+        answer3: 'parenthesis',
+        answer4: 'square brackets',
+        correct: 3
     },    
     {
         question: 'Arrays in JavaScript can be used to store _____',
-        answers: [
-            {text: 'numbers and strings', correct: false},
-            {text: 'other arrays', correct: false},
-            {text: 'booleans', correct: false},
-            {text: 'all of the above', correct: true}
-        ]
+        answer1: 'numbers and strings',
+        answer2: 'other arrays',
+        answer3: 'booleans',
+        answer4: 'all of the above',
+        correct: 4
     },
     {
         question: 'String values must be enclosed within _____ when being assigned to variables.',        
-        answers: [
-            {text: 'commas', correct: false},
-            {text: 'curly brackets', correct: false},
-            {text: 'quotes', correct: true},
-            {text: 'parenthesis', correct: false}
-        ]
+        answer1: 'commas',
+        answer2: 'curly brackets',
+        answer3: 'quotes',
+        answer4: 'parenthesis',
+        correct: 3
     },
     {
         question: 'A very useful tool used during development and debugging for printing content to the debugger is:',
-        answers: [
-            {text: 'JavaScript', correct: false},
-            {text: 'terminal/bash', correct: false},
-            {text: 'for loops', correct: false},
-            {text: 'console.log', correct: true}
-        ]
+        answer1: 'JavaScript',
+        answer2: 'terminal/bash',
+        answer3: 'for loops',
+        answer4: 'console.log',
+        correct: 4
     }
 ];
 
@@ -75,10 +70,10 @@ function startGame() {
 function showQuestion(){
     const currentQuizData = quizData[currentQuiz];
     questionElement.innerText = currentQuizData.question;
-    option1.innerText = currentQuizData.answers[0].text;
-    option2.innerText = currentQuizData.answers[1].text;
-    option3.innerText = currentQuizData.answers[2].text;
-    option4.innerText = currentQuizData.answers[3].text;
+    option1.innerText = currentQuizData.answer1;
+    option2.innerText = currentQuizData.answer2;
+    option3.innerText = currentQuizData.answer3;
+    option4.innerText = currentQuizData.answer4;
 }
 
 function resetState(){
@@ -87,23 +82,42 @@ function resetState(){
     }
 }
 
+const options = document.querySelectorAll(".opt-btn");
+options.forEach(option => {
+    option.addEventListener("click", e => {
+        selectAnswer(e);
+    })
+})
+
 function selectAnswer(e){
-    const selectedButton = e.target
-    const correct = selectedButton.dataset.correct;
-    setStatusClass(document.body, correct);
-    Array.from(answerButtonsElement.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct);
-    });
+    const selectedButton = e.target;
+    const correct = selectedButton.dataset["number"];
+    const currentCorrectness = quizData[currentQuiz].correct;
+    if(selectedButton.dataset["number"] == currentCorrectness){
+        setStatusClass(document.getElementById("correctness"), true);
+    } else {
+        setStatusClass(document.getElementById("correctness"), false);
+        countdown().subtractCountDown();
+    }
+
+    if (currentQuiz < quizData.length-1){
+        currentQuiz++;
+        showQuestion();
+    } else {
+        setInit();
+    }
 }
 
 function setStatusClass(element, correct){
-    clearStatusClass(element)
+    clearStatusClass(element);
+    console.log(correct);
     if(correct){
-        element.classList.add('correct');
+        element.textContent = "Correct!";
     } else {
-        element.classList.add('wrong');
+        element.textContent = 'Wrong.';
     }
 }
+
 
 function clearStatusClass(element){
     element.classList.remove('correct');
@@ -123,11 +137,14 @@ function countdown(){
         secondsLeft--;
         timer.textContent = "Time: " + secondsLeft;
 
+        function subtractCountDown(){
+            secondsLeft = secondsLeft - 15;
+        }
 
         if (secondsLeft === 0){
             clearInterval(timerInterval);
             viewScore();
-        }
+        }        
     }, 1000);
 }
 
@@ -153,18 +170,3 @@ initForm.addEventListener("submit", function(event){
 
     storeInit();
 });
-
-
-//Under this line, the codes are for highestScore.html.
-
-const backButton = document.getElementById("back");
-
-// Define a function backToPage()
-function backToPage(){
-    location.href="index.html";
-}
-
-function clearScores(){
-    document.querySelector(".score-grid");
-
-}
