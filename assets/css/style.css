@@ -1,6 +1,6 @@
-/* :root {
-
-} */
+:root {
+    --violet: rgb(166, 44, 227);
+}
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -13,6 +13,10 @@
 
 p {
     font-size: larger;
+}
+
+div {
+    display: block;
 }
 
 body {
@@ -52,4 +56,36 @@ a:hover {
 .time {
     right: 10%;
     position: absolute;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: 1;
+    grid-column-gap: 10%;
+    grid-row-gap: 5%;
+    /* justify-content: center; */
+}
+
+.opt-btn {
+    /* position: relative; */
+    display: block;
+    width: 40%;
+    background-color: var(--violet);
+    color: rgba(255, 255, 255, 0.772);
+    padding: 10px;
+}
+
+.correct {
+    position: relative;
+    /* display: flex; */
+    margin-top: 50px
+}
+
+/* id selector */
+#correctness {
+    font-size: x-large;
+}
+
+#init-form {
+    margin-top: 20px;
 }

@@ -76,11 +76,11 @@ function showQuestion(){
     option4.innerText = currentQuizData.answer4;
 }
 
-function resetState(){
-    while(answerButton.firstChild){
-        answerButton.removeChild(answerButton.firstChild);
-    }
-}
+// function resetState(){
+//     while(answerButton.firstChild){
+//         answerButton.removeChild(answerButton.firstChild);
+//     }
+// }
 
 const options = document.querySelectorAll(".opt-btn");
 options.forEach(option => {
@@ -91,13 +91,11 @@ options.forEach(option => {
 
 function selectAnswer(e){
     const selectedButton = e.target;
-    const correct = selectedButton.dataset["number"];
     const currentCorrectness = quizData[currentQuiz].correct;
     if(selectedButton.dataset["number"] == currentCorrectness){
         setStatusClass(document.getElementById("correctness"), true);
     } else {
-        setStatusClass(document.getElementById("correctness"), false);
-        countdown().subtractCountDown();
+        setStatusClass(document.getElementById("correctness"), false);        
     }
 
     if (currentQuiz < quizData.length-1){
@@ -105,6 +103,7 @@ function selectAnswer(e){
         showQuestion();
     } else {
         setInit();
+        clearInterval();
     }
 }
 
@@ -136,19 +135,21 @@ function countdown(){
     var timerInterval = setInterval(function(){
         secondsLeft--;
         timer.textContent = "Time: " + secondsLeft;
-
-        function subtractCountDown(){
-            secondsLeft = secondsLeft - 15;
-        }
-
-        if (secondsLeft === 0){
+        
+        if (secondsLeft <= 0){
             clearInterval(timerInterval);
             viewScore();
-        }        
+        }
     }, 1000);
 }
 
 
+// Define a function to set the page to prompt user to enter their initials
+const initialEl = document.querySelector(".submit-initial");
+function setInit(){
+    questionContainerElement.classList.add('hide');
+    initialEl.classList.remove("hide");
+}
 
 // Following is for the case where initial is submitted.
 var initArr = [];
