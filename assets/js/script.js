@@ -150,7 +150,6 @@ function setInit(){
 }
 
 // Following is for the case where initial is submitted.
-var initArr = [];
 var initForm = document.querySelector("#init-form");
 var initInput = document.querySelector("#init");
 
@@ -158,7 +157,6 @@ function storeInit(initialText){
     localStorage.setItem(initialText, JSON.stringify(secondsLeft));
 
 }
-
 
 initForm.addEventListener("submit", function(event){
     event.preventDefault();
@@ -168,9 +166,19 @@ initForm.addEventListener("submit", function(event){
     storeInit(initialText);
 
     highestScore();
-
 });
 
 function highestScore(){
     window.location.href = "./highestScore.html";
+}
+
+function renderScore(){
+    for (var i = 0; i < localStorage.length; i++){
+        if(localStorage.key(i) !== null && localStorage.key(i) !== "randid"){
+            var newScore = document.createElement('li');
+            newScore.textContent = localStorage.key(i) + " - " + localStorage.value(i);
+            document.querySelector("#score-list").append(newScore);
+            console.log(document.querySelector("#score-list"));
+        }
+    }
 }

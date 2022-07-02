@@ -2,6 +2,9 @@ const backButton = document.getElementById("back");
 const resetButton = document.getElementById("reset");
 const scoreGrid = document.getElementsByClassName("score-grid");
 
+// Display user's score
+renderScore();
+
 // Define a function backToPage()
 function backToPage(){
     location.href="index.html";
@@ -14,27 +17,20 @@ resetButton.addEventListener("click", function(){
     grid.removeChild(scoreList);
 
     clearLocalStorage();
-
-    console.log(grid);
-    console.log(grid.children[0]);
 })
 
 function clearLocalStorage(){
     localStorage.clear();
 }
 
-function scoreSort(){
 
-}
-
-function displayScore(){
-    var li = document.createElement('li');
-    li.textContent = localStorage.key + " " + localStorage.value;
-    grid.children[0];
-
-    if (grid.children){
-        grid.children[0].append(li);
-    } else {
-        grid.append(document.createElement('ol'));
+function renderScore(){
+    for (var i = 0; i < localStorage.length; i++){
+        if(localStorage.key(i) !== null && localStorage.key(i) !== "randid"){
+            var newScore = document.createElement('li');
+            newScore.textContent = localStorage.key(i) + " - " + localStorage.getItem(localStorage.key(i));
+            document.querySelector("#score-list").append(newScore);
+            console.log(document.querySelector("#score-list"));
+        }
     }
 }
