@@ -7,6 +7,8 @@ const option1 = document.getElementById("option1");
 const option2 = document.getElementById("option2");
 const option3 = document.getElementById("option3");
 const option4 = document.getElementById("option4");
+const timer = document.getElementById("time");
+const score = document.getElementById("score");
 
 const quizData = [
     {
@@ -66,22 +68,17 @@ function startGame() {
     countdown();
 }
 
-
+// Get a question from the object quizData and display the question
 function showQuestion(){
     const currentQuizData = quizData[currentQuiz];
     questionElement.innerText = currentQuizData.question;
-    option1.innerText = currentQuizData.answer1;
-    option2.innerText = currentQuizData.answer2;
-    option3.innerText = currentQuizData.answer3;
-    option4.innerText = currentQuizData.answer4;
+    option1.innerText = "1. " + currentQuizData.answer1;
+    option2.innerText = "2. " + currentQuizData.answer2;
+    option3.innerText = "3. " + currentQuizData.answer3;
+    option4.innerText = "4. " + currentQuizData.answer4;
 }
 
-// function resetState(){
-//     while(answerButton.firstChild){
-//         answerButton.removeChild(answerButton.firstChild);
-//     }
-// }
-
+// Whenever every answer button is clicked, the function selectAnswer will be triggered
 const options = document.querySelectorAll(".opt-btn");
 options.forEach(option => {
     option.addEventListener("click", e => {
@@ -89,6 +86,9 @@ options.forEach(option => {
     })
 })
 
+// Define a function to check if user chooses right answer
+// Define a function to set next question once the button is clicked
+// If there is no available question, the page will move to initial submission page.
 function selectAnswer(e){
     const selectedButton = e.target;
     const currentCorrectness = quizData[currentQuiz].correct;
@@ -96,6 +96,7 @@ function selectAnswer(e){
         setStatusClass(document.getElementById("correctness"), true);
     } else {
         setStatusClass(document.getElementById("correctness"), false);        
+        reduceTimer();
     }
 
     if (currentQuiz < quizData.length-1){
@@ -103,12 +104,18 @@ function selectAnswer(e){
         showQuestion();
     } else {
         setInit();
-        clearInterval();
+        clearInterval(timerInterval);
+        timer.textContent = "Time: ";
     }
 }
 
+function reduceTimer(){
+    secondsLeft -= 15;
+}
+
+// Define a function to display if user chooses a right answer
 function setStatusClass(element, correct){
-    clearStatusClass(element);
+    // clearStatusClass(element);
     console.log(correct);
     if(correct){
         element.textContent = "Correct!";
@@ -118,27 +125,17 @@ function setStatusClass(element, correct){
 }
 
 
-function clearStatusClass(element){
-    element.classList.remove('correct');
-    element.classList.remove('wrong');
-}
-
-//Define a function viewScore()
-function viewScore(){
-
-}
-
 //Define a function countdown()
-const timer = document.getElementById("time");
+var secondsLeft = 100;
+var timerInterval;
 function countdown(){
-    var secondsLeft = 100;
-    var timerInterval = setInterval(function(){
+        timerInterval = setInterval(function(){
         secondsLeft--;
         timer.textContent = "Time: " + secondsLeft;
         
         if (secondsLeft <= 0){
             clearInterval(timerInterval);
-            viewScore();
+            setInit();
         }
     }, 1000);
 }
@@ -149,25 +146,31 @@ const initialEl = document.querySelector(".submit-initial");
 function setInit(){
     questionContainerElement.classList.add('hide');
     initialEl.classList.remove("hide");
+    score.textContent = "Your score: " + secondsLeft;
 }
 
 // Following is for the case where initial is submitted.
 var initArr = [];
-
-function storeInit(){
-    localStorage.setItem("init", JSON.stringify(initArr))
-}
-
 var initForm = document.querySelector("#init-form");
 var initInput = document.querySelector("#init");
+
+function storeInit(initialText){
+    localStorage.setItem(initialText, JSON.stringify(secondsLeft));
+
+}
+
 
 initForm.addEventListener("submit", function(event){
     event.preventDefault();
 
     var initialText = initInput.value.trim();
 
-    initArr.push(initialText);
-    initInput.value = "";
+    storeInit(initialText);
 
-    storeInit();
+    highestScore();
+
 });
+
+function highestScore(){
+    window.location.href = "./highestScore.html";
+}
